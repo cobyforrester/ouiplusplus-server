@@ -48,26 +48,26 @@ public class ASTExpression {
         this.size++;
         switch (tt) {
             case STRING:
-            case DOUBLE: 
-            case INT: 
-            case LIST: 
-            case NULL: 
-            case MAP: 
-            	return casePrimitiveType(token);
-            case MULT: 
+            case DOUBLE:
+            case INT:
+            case LIST:
+            case NULL:
+            case MAP:
+                return casePrimitiveType(token);
+            case MULT:
             case DIV:
-            case MODULO: 
-            case CARROT: 
-            	return caseMULTDIV(token);
+            case MODULO:
+            case CARROT:
+                return caseMULTDIV(token);
             case PLUS:
-            case MINUS: 
-            	return casePLUSMINUS(token);
-            case LPAREN: 
-            	return caseLPAREN(token);
+            case MINUS:
+                return casePLUSMINUS(token);
+            case LPAREN:
+                return caseLPAREN(token);
             case RPAREN:
-            	return caseRPAREN(token);
-            default: 
-            	return err;
+                return caseRPAREN(token);
+            default:
+                return err;
         }
     }
 

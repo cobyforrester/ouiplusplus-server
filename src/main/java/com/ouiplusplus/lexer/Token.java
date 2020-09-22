@@ -77,7 +77,7 @@ public class Token {
     //======================== CLASS METHODS ========================
     public Token copy () {
         return new Token(type, getValue(), start, end, boolVal,
-                elements, copy2DLst(initialElems),
+                copy1DLst(elements), copy2DLst(initialElems),
                 copy2DMap(initialMap), copy1DMap(map));
     }
     private List<List<Token>> copy2DLst (List<List<Token>> lst) {
@@ -172,12 +172,6 @@ public class Token {
                 if (this.boolVal) return "vrai";
                 else return "faux";
             }
-        }
-
-        //FOR NULL
-        if (this.type == TokenType.NULL) {
-            if(Language.language == Languages.ENGLISH) return "null";
-            else if(Language.language == Languages.FRENCH) return "nul";
         }
 
         if (this.isNeg && !this.value.equals("0") && (this.type == TokenType.INT

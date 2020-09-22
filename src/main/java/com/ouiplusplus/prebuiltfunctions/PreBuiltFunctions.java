@@ -12,7 +12,15 @@ public class PreBuiltFunctions {
 
     public static List<String> getFunctions() {
         return Arrays.asList(
-                "len", "set", "get", "sub", "append", "addAt", "put", "remove", "getKeys"
+                "len","long",
+                "set", "remplacer",
+                "get", "obtenir",
+                "sub",
+                "append", "ajouter",
+                "addAt", "ajoutesA", "ajoutesÀ",
+                "put", "mettre",
+                "remove", "retirer",
+                "getKeys", "obtenirCles", "obtenirClés"
         );
     }
 
@@ -25,7 +33,7 @@ public class PreBuiltFunctions {
         if (token.getType() != TokenType.FUNCCALL) return err;
 
 
-        if (token.getValue().equals("len")) {
+        if (token.getValue().equals("len") || token.getValue().equals("long")) {
             /*
             (LIST|MAP|STRING) -> INT
              */
@@ -54,7 +62,7 @@ public class PreBuiltFunctions {
                         token.getEnd());
                 return new Pair<>(t, null);
             }
-        } else if (token.getValue().equals("get")) {
+        } else if (token.getValue().equals("get") || token.getValue().equals("obtenir")) {
             /*
             (LIST|MAP|STRING, INDEX|ITEM) -> ANYTYPE
              */
@@ -73,7 +81,9 @@ public class PreBuiltFunctions {
                     int a2 = Integer.parseInt(arg2.getValue());
 
                     int length = arg1.getElements().size();
-                    if (length <= a2) return err;
+                    if (length <= a2) {
+                        return err;
+                    }
                     Token t = arg1.getElements().get(a2);
                     t.setStart(token.getStart());
                     t.setEnd(token.getEnd());
@@ -110,7 +120,7 @@ public class PreBuiltFunctions {
                 err.setP2(new OverFlow(token.getStart(), token.getEnd(), token.getValue()));
                 return err;
             }
-        } else if (token.getValue().equals("set")) {
+        } else if (token.getValue().equals("set") || token.getValue().equals("remplacer")) {
             /*
             (LIST|MAP|STRING, INDEX|ITEM) -> ANYTYPE
              */
@@ -128,7 +138,9 @@ public class PreBuiltFunctions {
                 int a3 = Integer.parseInt(arg3.getValue());
 
                 int length = arg1.getElements().size();
-                if (length <= a3) return err;
+                if (length <= a3) {
+                    return err;
+                }
                 List<Token> newLst = arg1.getElements();
                 newLst.set(a3, arg2);
                 Token t = new Token(TokenType.LIST, "[]", token.getStart(),
@@ -139,7 +151,7 @@ public class PreBuiltFunctions {
                 err.setP2(new OverFlow(token.getStart(), token.getEnd(), token.getValue()));
                 return err;
             }
-        } else if (token.getValue().equals("remove")) {
+        } else if (token.getValue().equals("remove") || token.getValue().equals("retirer")) {
             /*
             (LIST|MAP, INDEX|ITEM) -> LIST|MAP
              */
@@ -220,7 +232,9 @@ public class PreBuiltFunctions {
                 err.setP2(new OverFlow(token.getStart(), token.getEnd(), token.getValue()));
                 return err;
             }
-        } else if (token.getValue().equals("addAt")) {
+        } else if (token.getValue().equals("addAt")
+                || token.getValue().equals("ajoutesA")
+                || token.getValue().equals("ajoutesÀ")) {
             /*
             (LIST, ITEM, INT) -> LIST
              */
@@ -248,7 +262,7 @@ public class PreBuiltFunctions {
                 err.setP2(new OverFlow(token.getStart(), token.getEnd(), token.getValue()));
                 return err;
             }
-        } else if (token.getValue().equals("append")) {
+        } else if (token.getValue().equals("append") || token.getValue().equals("ajouter")) {
             /*
             (LIST, ITEM) -> LIST
              */
@@ -264,7 +278,7 @@ public class PreBuiltFunctions {
             t.setElements(arg1.getElements());
             return new Pair<>(t, null);
 
-        } else if (token.getValue().equals("put")) {
+        } else if (token.getValue().equals("put") || token.getValue().equals("mettre")) {
             /*
             (MAP, KEY, VALUE) -> MAP
              */
@@ -285,7 +299,9 @@ public class PreBuiltFunctions {
                     token.getEnd());
             t.setMap(m);
             return new Pair<>(t, null);
-        } else if (token.getValue().equals("getKeys")) {
+        } else if (token.getValue().equals("getKeys")
+                || token.getValue().equals("obtenirCles")
+                || token.getValue().equals("obtenirClés")) {
             /*
             (MAP) -> LIST
              */
